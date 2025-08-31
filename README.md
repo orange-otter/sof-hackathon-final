@@ -1,141 +1,145 @@
-
-
 ```markdown
 # Maritime SOF Analytics 🚢
 
-**Live Demo:** [**https://project-sof-analysis.netlify.app/**](https://project-sof-analysis.netlify.app/)
+**Live Demo:** 👉 [**https://project-sof-analysis.netlify.app/**](https://project-sof-analysis.netlify.app/)
 
-A full-stack web application that transforms unstructured maritime Statement of Facts (SOF) documents into actionable, structured data. Upload PDF or DOCX files and instantly receive a detailed analysis, complete with an interactive events table and a dynamic Gantt chart timeline.
+A **full-stack web application** that transforms unstructured maritime **Statement of Facts (SOF)** documents into actionable, structured data.  
 
-
+Upload **PDF/DOCX** files and instantly receive a detailed analysis, including:  
+- An **interactive events table**  
+- A **dynamic Gantt chart timeline**  
 
 ---
 
 ## 🚀 Key Features
 
--   **Intelligent Document Parsing**: Utilizes **LlamaParse** to accurately extract raw text content from complex PDF and DOCX documents.
--   **Advanced AI Data Structuring**: Employs a **dual-pass refinement strategy** with the **Google Gemini Pro** model. An initial extraction is critically reviewed and corrected by a second AI pass, ensuring maximum accuracy and completeness.
--   **Robust Backend API**: Built with **FastAPI** for high-performance, asynchronous handling of file uploads and processing. Data integrity is ensured using **Pydantic** schemas.
--   **Framework-Free Frontend**: A sleek, responsive, and fast user interface built with vanilla **HTML, CSS, and JavaScript**, demonstrating modern web capabilities without reliance on heavy frameworks.
--   **Rich Data Visualization**:
-    -   **Detailed Table View**: A clear, color-coded table of all operational events.
-    -   **Custom Gantt Chart**: A dynamic and interactive timeline visualizing the sequence and duration of events, built from scratch.
--   **Flexible Data Export**: Download the structured analysis in both **CSV** and **JSON** formats for seamless integration with other systems.
+- **📄 Intelligent Document Parsing**  
+  Extracts raw text from complex PDF/DOCX files using **LlamaParse**.
+
+- **🤖 Advanced AI Structuring**  
+  Dual-pass refinement with **Google Gemini Pro**:
+  1. First AI pass → structures extracted data.  
+  2. Second AI pass → validates, corrects, and merges inconsistencies for maximum accuracy.
+
+- **⚡ Robust Backend API**  
+  Built with **FastAPI**, ensuring fast, asynchronous file handling.  
+  Uses **Pydantic** schemas for strong data validation.
+
+- **🎨 Framework-Free Frontend**  
+  Responsive, modern UI built with **vanilla HTML, CSS, and JavaScript** (no heavy frameworks).
+
+- **📊 Rich Data Visualization**  
+  - **Detailed Events Table** → color-coded, sortable.  
+  - **Custom Gantt Chart** → interactive timeline built from scratch.
+
+- **💾 Flexible Data Export**  
+  Download structured data in **CSV** and **JSON** formats.
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Area       | Technologies                                                                                             |
-| :--------- | :------------------------------------------------------------------------------------------------------- |
-| **Backend** | Python, FastAPI, Uvicorn, Google Generative AI (Gemini), LlamaParse, Pydantic, python-dotenv           |
-| **Frontend** | HTML5, CSS3 (with custom animations, flexbox, grid), Vanilla JavaScript (ES6+)                          |
-| **DevOps** | Git, GitHub                                                                                              |
+| Area        | Technologies                                                                 |
+|-------------|------------------------------------------------------------------------------|
+| **Backend** | Python, FastAPI, Uvicorn, Google Gemini, LlamaParse, Pydantic, python-dotenv |
+| **Frontend**| HTML5, CSS3 (grid, flexbox, animations), Vanilla JS (ES6+)                   |
+| **DevOps**  | Git, GitHub                                                                  |
 
 ---
 
 ## ⚙️ How It Works
 
-1.  **File Upload**: The user uploads one or more SOF documents through the web interface. The frontend provides drag-and-drop functionality and visual feedback.
-2.  **Backend Processing**: The **FastAPI** server receives the files and saves them temporarily.
-3.  **Text Extraction**: Each file is passed to the `document_parser`, which uses **LlamaParse** to extract clean, ordered text.
-4.  **AI Structuring & Refinement**:
-    -   The extracted text is sent to the `processor`, where the **Google Gemini** model performs a first pass to structure the data into a predefined JSON schema.
-    -   A second, "adjudicator" prompt is then used. The AI is given the original text and both the first and second extraction attempts, and is tasked with resolving conflicts and merging the data to produce a final, highly accurate JSON object.
-5.  **Data Visualization**: The final JSON is sent to the frontend. JavaScript dynamically renders the data into the dashboard on the `/data` page, populating the details card, events table, and the custom Gantt chart. Data is stored in `localStorage` to persist between pages.
-6.  **Export**: The user can download the complete dataset as a CSV or JSON file, generated on-the-fly by the frontend.
+1. **File Upload** → Upload SOF documents (drag & drop supported).  
+2. **Backend Processing** → Files saved temporarily by FastAPI.  
+3. **Text Extraction** → `document_parser` extracts ordered text with **LlamaParse**.  
+4. **AI Structuring & Refinement**:  
+   - First pass → Gemini structures data.  
+   - Second pass (adjudicator) → Compares original text + both extractions → resolves conflicts.  
+   - Output → **final, high-accuracy JSON object**.  
+5. **Data Visualization** → Frontend renders data into:  
+   - Details card  
+   - Events table  
+   - Custom Gantt chart  
+   *(stored in localStorage for persistence)*  
+6. **Export** → Data downloadable as **CSV/JSON**.
 
 ---
 
 ## 📂 Project Structure
 
-The project is organized into two main directories: `project-backend` and `project-frontend`, ensuring a clean separation of concerns.
-
 ```
 
 maritime-sof-analytics/
 ├── project-backend/
-│   ├── uploads/              \# Temporary storage for uploaded files (created at runtime)
-│   ├── .env                  \# Environment variables (API keys)
-│   ├── main.py               \# FastAPI application, endpoints, and static file serving
-│   ├── document\_parser.py    \# Text extraction logic using LlamaParse
-│   ├── processor.py          \# Data structuring and refinement logic using Gemini
-│   └── requirements.txt      \# Python dependencies
+│   ├── uploads/             # Temp storage for uploaded files (runtime only)
+│   ├── .env                 # API keys
+│   ├── main.py              # FastAPI app, routes, static file serving
+│   ├── document\_parser.py   # Text extraction logic (LlamaParse)
+│   ├── processor.py         # AI structuring & refinement logic (Gemini)
+│   └── requirements.txt     # Python dependencies
+│
 └── project-frontend/
-├── index.html            \# Application homepage
-├── upload.html           \# File upload interface
-├── data.html             \# Data visualization dashboard
-├── styles.css            \# All CSS styles for the application
-└── script.js             \# All JavaScript logic for the frontend
+├── index.html           # Homepage
+├── upload.html          # File upload page
+├── data.html            # Visualization dashboard
+├── styles.css           # CSS styles
+└── script.js            # Frontend logic
 
 ````
 
 ---
 
-## 📦 Setup and Local Installation
+## 📦 Setup & Local Installation
 
-Follow these steps to get the project running on your local machine.
+### 🔑 Prerequisites
+- Python **3.8+**
+- `pip` package manager
+- A modern web browser (Chrome/Firefox)
 
-### Prerequisites
-
--   Python 3.8+
--   `pip` package manager
--   A modern web browser (e.g., Chrome, Firefox)
-
-### 1. Clone the Repository
-
-First, clone the project to your local machine.
-
+### 1️⃣ Clone the Repository
 ```bash
-git clone [https://your-repository-url.com/maritime-sof-analytics.git](https://your-repository-url.com/maritime-sof-analytics.git)
+git clone https://your-repository-url.com/maritime-sof-analytics.git
 cd maritime-sof-analytics/project-backend
 ````
 
-### 2\. Set Up Environment Variables
+### 2️⃣ Set Environment Variables
 
-This project requires API keys for LlamaParse and Google Gemini.
+Create a `.env` file in `project-backend/` and add:
 
-1.  Inside the `project-backend` directory, create a file named `.env`.
-2.  Add your API keys to the `.env` file:
-    ```env
-    LLAMA_CLOUD_API_KEY="llx-..."
-    GOOGLE_API_KEY="AIz..."
-    ```
+```env
+LLAMA_CLOUD_API_KEY="llx-..."
+GOOGLE_API_KEY="AIz-..."
+```
 
-### 3\. Install Dependencies
-
-Install the required Python packages using the `requirements.txt` file.
+### 3️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4\. Run the Application
-
-Start the FastAPI backend server using Uvicorn. The `--reload` flag will automatically restart the server when you make changes to the code.
+### 4️⃣ Run the Backend
 
 ```bash
 uvicorn main:app --reload
 ```
 
-### 5\. Access the Web Interface
+### 5️⃣ Access the App
 
-Once the server is running (you'll see `Uvicorn running on http://127.0.0.1:8000`), open your web browser and navigate to:
+Open: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+The FastAPI server serves all frontend files.
 
-**[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+---
 
-The FastAPI application is configured to serve all the necessary HTML, CSS, and JavaScript files from the `project-frontend` directory.
+## 🔗 Resources
 
------
+* [🌐 LlamaParse – Get API Key](https://cloud.llamaindex.ai/)
+* [🌐 Google AI Studio – Get Gemini Key](https://aistudio.google.com/app/apikey)
+* [📘 FastAPI Documentation](https://fastapi.tiangolo.com/)
+* [📘 Pydantic Documentation](https://docs.pydantic.dev/latest/)
 
-## 🔗 Links and Resources
+---
 
-  - **LlamaParse**: [Get your API key](https://www.google.com/search?q=https://cloud.llamaindex.ai/)
-  - **Google AI Studio**: [Get your Gemini API key](https://aistudio.google.com/app/apikey)
-  - **FastAPI**: [Official Documentation](https://fastapi.tiangolo.com/)
-  - **Pydantic**: [Documentation](https://docs.pydantic.dev/latest/)
-
-<!-- end list -->
+✨ Built with passion for smarter maritime analytics 🚢
 
 ```
 ```
